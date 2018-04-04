@@ -1,0 +1,641 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 11.1' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     23718,        633]
+NotebookOptionsPosition[     21293,        585]
+NotebookOutlinePosition[     21650,        601]
+CellTagsIndexPosition[     21607,        598]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[TextData[StyleBox["1. Doma\[CHacek]a naloga",
+ FontTracking->"Plain",
+ FontColor->RGBColor[1, 0, 0]]], "Title",
+ CellChangeTimes->{{3.7304499313010445`*^9, 
+  3.7304499398687572`*^9}},ExpressionUUID->"57f5883e-c118-4feb-b40d-\
+9c1ee0cbb99b"],
+
+Cell["\<\
+Dva igralca na skrivaj na svoj listi\[CHacek] napi\[SHacek]eta tri \
+nenegativna cela \[SHacek]tevila v (ne nujno strogo) \
+nara\[SHacek]\[CHacek]ujo\[CHacek]em vrstnem redu, tako da je njihova vsota \
+enaka 6. Zmaga tisti igralec, ki ima ve\[CHacek] ve\[CHacek]jih istole\
+\[ZHacek]nih \[SHacek]tevil (\[CHacek]e jih imata enako, je rezultat izena\
+\[CHacek]en). Dolo\[CHacek]i vrednost te igre in optimalno strategijo obeh \
+igralcev s pomo\[CHacek]jo linearnega programiranja.\
+\>", "Text",
+ CellChangeTimes->{{3.7304499892900195`*^9, 3.7304501198258753`*^9}, {
+  3.7307216686931963`*^9, 
+  3.730721668856728*^9}},ExpressionUUID->"9a3beb89-befe-4d44-ab77-\
+710ad075d005"],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["Re\[SHacek]itev:",
+ FontColor->RGBColor[1, 0, 0]]], "Chapter",
+ CellChangeTimes->{{3.730721527855692*^9, 3.730721538249179*^9}, {
+  3.730721601859852*^9, 
+  3.7307216070678663`*^9}},ExpressionUUID->"02e186d1-0d2f-4cb4-a71a-\
+4afc6aeadd96"],
+
+Cell["\<\
+Da lahko zapi\[SHacek]emo vrednostno matriko igre,  moramo premisliti, kak\
+\[SHacek]ne so mo\[ZHacek]nosti igralcev in kasneje \[SHacek]e, \
+kak\[SHacek]en izzid ima posamezna kombinacija izbir obeh igralcev. 
+Poglejmo najprej, katere kombinacije sploh sestavljajo vsoto 6. To so: {6}, \
+{1, 5}, {2, 4}, {3, 3}, {1, 1, 4}, {1, 2, 3} in {2, 2, 2}. \[CapitalCHacek]e \
+izberemo npr. samo \[SHacek]tevilo 6, moramo za drugi dve izbrati 0, ker \
+moramo izbrati 3 \[SHacek]tevila. 
+
+Vse mo\[ZHacek]ne izbire posameznega igralca so torej: 
+1. mo\[ZHacek]nost: {0, 0, 6}, 
+2. mo\[ZHacek]nost: {0, 1, 5}, 
+3. mo\[ZHacek]nost: {0, 2, 4}, 
+4. mo\[ZHacek]nost: {0, 3, 3}, 
+5. mo\[ZHacek]nost: {1, 1, 4}, 
+6. mo\[ZHacek]nost: {1, 2, 3} in 
+7. mo\[ZHacek]nost: {2, 2, 2}.
+\
+\>", "Text",
+ CellChangeTimes->{{3.730450198739558*^9, 3.7304502698628416`*^9}, {
+  3.7307216797129927`*^9, 3.730721772105876*^9}, {3.730721806507986*^9, 
+  3.7307220831006403`*^9}, {3.7307224589995413`*^9, 
+  3.730722502103677*^9}},ExpressionUUID->"ff3708f4-6302-4b44-9a2b-\
+3b461fb1b112"],
+
+Cell["\<\
+Sedaj lahko zapi\[SHacek]emo pripadajo\[CHacek]o vrednostno matriko velikosti \
+7x7:\
+\>", "Text",
+ CellChangeTimes->{{3.730450295167433*^9, 3.7304503023441687`*^9}, {
+  3.7307220894526157`*^9, 3.730722099692378*^9}, {3.730722510768868*^9, 
+  3.730722513263105*^9}},ExpressionUUID->"c4725e31-48d4-4c61-9e37-\
+ca8e771be789"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"a", " ", "=", " ", 
+  RowBox[{"(", "\[NoBreak]", GridBox[{
+     {"0", "0", "0", "0", 
+      RowBox[{"-", "1"}], 
+      RowBox[{"-", "1"}], 
+      RowBox[{"-", "1"}]},
+     {"0", "0", "0", "0", "0", 
+      RowBox[{"-", "1"}], 
+      RowBox[{"-", "1"}]},
+     {"0", "0", "0", "0", "0", "0", "0"},
+     {"0", "0", "0", "0", 
+      RowBox[{"-", "1"}], "0", "1"},
+     {"1", "0", "0", "1", "0", "0", 
+      RowBox[{"-", "1"}]},
+     {"1", "1", "0", "0", "0", "0", "0"},
+     {"1", "1", "0", 
+      RowBox[{"-", "1"}], "1", "0", "0"}
+    }], "\[NoBreak]", ")"}]}]], "Input",
+ CellChangeTimes->{{3.7304503157025366`*^9, 3.730450446471676*^9}, {
+  3.7307221415898933`*^9, 3.730722179066523*^9}, {3.730722233096611*^9, 
+  3.730722324784422*^9}, {3.730722364297817*^9, 3.730722374744067*^9}, {
+  3.7307231030842533`*^9, 3.730723139428482*^9}, {3.730723181284306*^9, 
+  3.7307231827820873`*^9}, {3.730723247765012*^9, 
+  3.730723262306201*^9}},ExpressionUUID->"04d6db5d-a405-421d-bb89-\
+4f4b7e89b096"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"0", ",", "0", ",", "0", ",", "0", ",", 
+     RowBox[{"-", "1"}], ",", 
+     RowBox[{"-", "1"}], ",", 
+     RowBox[{"-", "1"}]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"0", ",", "0", ",", "0", ",", "0", ",", "0", ",", 
+     RowBox[{"-", "1"}], ",", 
+     RowBox[{"-", "1"}]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0"}],
+     "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"0", ",", "0", ",", "0", ",", "0", ",", 
+     RowBox[{"-", "1"}], ",", "0", ",", "1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"1", ",", "0", ",", "0", ",", "1", ",", "0", ",", "0", ",", 
+     RowBox[{"-", "1"}]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"1", ",", "1", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0"}],
+     "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"1", ",", "1", ",", "0", ",", 
+     RowBox[{"-", "1"}], ",", "1", ",", "0", ",", "0"}], "}"}]}], 
+  "}"}]], "Output",
+ CellChangeTimes->{3.730723081034665*^9, 
+  3.730723263287033*^9},ExpressionUUID->"471e70c3-f2a8-4cd3-b8b7-\
+cb0c5532dbf8"]
+}, Open  ]],
+
+Cell[TextData[{
+ StyleBox["Opomba: ",
+  FontWeight->"Bold"],
+ "Dobili smo jo na naslednji na\[CHacek]in.\n\t\tPoglejmo si na primer 4. \
+vrstico: (0 0 0 0 -1 0 1). \n\t\tV primeru, \[CHacek]e 2. igralec izbere \
+izbiro 4 ({0, 3, 3}), 1. igralec pa 5. ({1, 1, 4}), \n\t\tima 2. igralec obe \
+\[SHacek]tevili vi\[SHacek]ji, zato zmaga - ker gre za zmago 2. igralca napi\
+\[SHacek]emo 1. \n\t\t\[CapitalCHacek]e izbere 2. isto izbiro, prvi pa 7. \
+izbiro {2, 2, 2}, pa zmaga, ker ima 2 \[SHacek]tevili vi\[SHacek]ji - tja \
+zato napi\[SHacek]emo 1.\n\t\tV ve\[CHacek]ini primerih pa je rezultat \
+neizena\[CHacek]en, zaradi \[CHacek]esar je na\[SHacek]a matrika precej \
+prazna (ni\[CHacek]le).\n\t\tMed razmisleki opazimo tudi, da je igra simetri\
+\[CHacek]na.\n"
+}], "Text",
+ CellChangeTimes->{{3.7304504589039497`*^9, 3.7304504843285513`*^9}, {
+  3.7306477400318193`*^9, 3.7306477794300394`*^9}, {3.730722377522184*^9, 
+  3.730722453757021*^9}, {3.730722524811301*^9, 3.730722641804447*^9}, {
+  3.730722783345923*^9, 3.730722939717061*^9}, {3.730722990732395*^9, 
+  3.730723024262567*^9}, {3.730731582117628*^9, 3.7307315906197653`*^9}, {
+  3.7307368297484913`*^9, 
+  3.730736830775777*^9}},ExpressionUUID->"8485ce3d-21b1-4938-9d8e-\
+79052cba706a"],
+
+Cell["\<\
+V matriki ne \[ZHacek]elimo negativnih vrednosti, zato vsakemu elementu pri\
+\[SHacek]tejmo 1 (matriko velikosti 7x7 samih enk).\
+\>", "Text",
+ CellChangeTimes->{{3.7304504941765404`*^9, 3.730450521946023*^9}, {
+  3.73072304449225*^9, 3.730723069505292*^9}, {3.730723284090385*^9, 
+  3.7307232939495792`*^9}},ExpressionUUID->"38145ff5-cd9a-4437-9386-\
+d0d5fee60577"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"A", " ", "=", " ", 
+  RowBox[{"a", " ", "+", " ", 
+   RowBox[{"Table", "[", 
+    RowBox[{"1", ",", " ", 
+     RowBox[{"{", "7", "}"}], ",", " ", 
+     RowBox[{"{", "7", "}"}]}], "]"}]}]}]], "Input",
+ CellChangeTimes->{{3.7304505571851764`*^9, 3.73045056326772*^9}, {
+  3.7307230748348637`*^9, 3.730723098614233*^9}, {3.730723185273799*^9, 
+  3.730723270032889*^9}},ExpressionUUID->"7cf69126-105c-4e34-a08d-\
+729e1d9f5528"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"1", ",", "1", ",", "1", ",", "1", ",", "0", ",", "0", ",", "0"}],
+     "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "0", ",", "0"}],
+     "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1"}],
+     "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"1", ",", "1", ",", "1", ",", "1", ",", "0", ",", "1", ",", "2"}],
+     "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"2", ",", "1", ",", "1", ",", "2", ",", "1", ",", "1", ",", "0"}],
+     "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"2", ",", "2", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1"}],
+     "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"2", ",", "2", ",", "1", ",", "0", ",", "2", ",", "1", ",", "1"}],
+     "}"}]}], "}"}]], "Output",
+ CellChangeTimes->{
+  3.730450563915779*^9, {3.730723211428176*^9, 3.7307232706656017`*^9}, 
+   3.730731815743919*^9},ExpressionUUID->"c6155731-9fa5-4bd1-ba0e-\
+135c4fd6cf0f"]
+}, Open  ]],
+
+Cell["\<\
+Matriko sedaj transponirajmo in pogledamo vrstice, ki nam dajo pogoje.\
+\>", "Text",
+ CellChangeTimes->{{3.730736838078595*^9, 3.730736844499435*^9}, {
+  3.730738648821993*^9, 
+  3.730738689585703*^9}},ExpressionUUID->"d9d50e81-9a3b-43d3-a6f2-\
+6c3602b96393"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Transpose", "[", "A", "]"}]], "Input",
+ CellChangeTimes->{{3.730736778974916*^9, 3.730736786775758*^9}, 
+   3.730736850772697*^9},ExpressionUUID->"20437d22-056d-444e-9e54-\
+5a816d3d6277"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"1", ",", "1", ",", "1", ",", "1", ",", "2", ",", "2", ",", "2"}],
+     "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "2", ",", "2"}],
+     "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1"}],
+     "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"1", ",", "1", ",", "1", ",", "1", ",", "2", ",", "1", ",", "0"}],
+     "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"0", ",", "1", ",", "1", ",", "0", ",", "1", ",", "1", ",", "2"}],
+     "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"0", ",", "0", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1"}],
+     "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"0", ",", "0", ",", "1", ",", "2", ",", "0", ",", "1", ",", "1"}],
+     "}"}]}], "}"}]], "Output",
+ CellChangeTimes->{
+  3.730736787378364*^9},ExpressionUUID->"7ccc9d88-9cc7-499f-87c8-\
+95bac6dd01d7"]
+}, Open  ]],
+
+Cell["\<\
+Optimalno strategijo najdemo tako, da najprej poi\[SHacek]\[CHacek]emo \
+minimax 1. igralca, potem pa maximin 2. igralca, in vidimo, \[CHacek]e sta \
+enaka. \[CapitalCHacek]e sta, ima igra sedlo, ki je kar vrednost igre. Od tam \
+dobimo tudi re\[SHacek]itev (v splo\[SHacek]nem jih obstaja  sicer neskon\
+\[CHacek]no, ampak mi na tak na\[CHacek]in dobimo le eno, ki pa je vseeno \
+optimalna).\
+\>", "Text",
+ CellChangeTimes->{{3.730450583339515*^9, 3.730450600860083*^9}, {
+  3.730723303375114*^9, 3.730723314865357*^9}, {3.730731563837641*^9, 
+  3.7307315983862543`*^9}, {3.730731662639886*^9, 3.7307317799944143`*^9}, {
+  3.730738052223387*^9, 
+  3.730738061093594*^9}},ExpressionUUID->"c370ff18-3626-400c-8856-\
+8245c0c65274"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Minimize", "[", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{
+      SubscriptBox["u", "1"], "+", 
+      SubscriptBox["u", "2"], "+", " ", 
+      SubscriptBox["u", "3"], "+", 
+      SubscriptBox["u", "4"], "+", 
+      SubscriptBox["u", "5"], "+", 
+      SubscriptBox["u", "6"], "+", 
+      SubscriptBox["u", "7"]}], ",", "\[IndentingNewLine]", " ", 
+     RowBox[{
+      RowBox[{
+       SubscriptBox["u", "1"], "+", 
+       SubscriptBox["u", "2"], "+", " ", 
+       SubscriptBox["u", "3"], "+", 
+       SubscriptBox["u", "4"], "+", 
+       RowBox[{"2", 
+        SubscriptBox["u", "5"]}], "+", 
+       RowBox[{"2", 
+        SubscriptBox["u", "6"]}], "+", 
+       RowBox[{"2", 
+        SubscriptBox["u", "7"]}]}], " ", "\[GreaterEqual]", " ", "1"}], ",", 
+     " ", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{
+       SubscriptBox["u", "1"], "+", 
+       SubscriptBox["u", "2"], "+", " ", 
+       SubscriptBox["u", "3"], "+", 
+       SubscriptBox["u", "4"], "+", 
+       SubscriptBox["u", "5"], "+", 
+       RowBox[{"2", 
+        SubscriptBox["u", "6"]}], "+", 
+       RowBox[{"2", 
+        SubscriptBox["u", "7"]}]}], " ", "\[GreaterEqual]", " ", "1"}], ",", 
+     " ", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{
+       SubscriptBox["u", "1"], "+", 
+       SubscriptBox["u", "2"], "+", " ", 
+       SubscriptBox["u", "3"], "+", 
+       SubscriptBox["u", "4"], "+", 
+       SubscriptBox["u", "5"], "+", 
+       SubscriptBox["u", "6"], "+", 
+       SubscriptBox["u", "7"]}], " ", "\[GreaterEqual]", " ", "1"}], ",", 
+     "\[IndentingNewLine]", " ", 
+     RowBox[{
+      RowBox[{
+       SubscriptBox["u", "1"], "+", 
+       SubscriptBox["u", "2"], "+", " ", 
+       SubscriptBox["u", "3"], "+", 
+       SubscriptBox["u", "4"], "+", 
+       RowBox[{"2", 
+        SubscriptBox["u", "5"]}], "+", 
+       SubscriptBox["u", "6"]}], " ", "\[GreaterEqual]", " ", "1"}], ",", " ",
+      "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{
+       SubscriptBox["u", "2"], "+", " ", 
+       SubscriptBox["u", "3"], "+", 
+       SubscriptBox["u", "5"], "+", 
+       SubscriptBox["u", "6"], "+", 
+       RowBox[{"2", 
+        SubscriptBox["u", "7"]}]}], " ", "\[GreaterEqual]", " ", "1"}], ",", 
+     " ", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{
+       SubscriptBox["u", "3"], "+", 
+       SubscriptBox["u", "4"], "+", 
+       SubscriptBox["u", "5"], "+", 
+       SubscriptBox["u", "6"], "+", 
+       SubscriptBox["u", "7"]}], " ", "\[GreaterEqual]", " ", "1"}], ",", 
+     "\[IndentingNewLine]", " ", 
+     RowBox[{
+      RowBox[{
+       SubscriptBox["u", "3"], "+", 
+       RowBox[{"2", 
+        SubscriptBox["u", "4"]}], "+", 
+       SubscriptBox["u", "6"], "+", 
+       SubscriptBox["u", "7"]}], " ", "\[GreaterEqual]", " ", "1"}], ",", " ",
+      "\[IndentingNewLine]", 
+     RowBox[{
+      SubscriptBox["u", "1"], "\[GreaterEqual]", " ", "0"}], ",", " ", 
+     RowBox[{
+      SubscriptBox["u", "2"], "\[GreaterEqual]", " ", "0"}], ",", "  ", 
+     RowBox[{
+      SubscriptBox["u", "3"], "\[GreaterEqual]", " ", "0"}], ",", "  ", 
+     RowBox[{
+      SubscriptBox["u", "4"], "\[GreaterEqual]", " ", "0"}], ",", "  ", 
+     RowBox[{
+      SubscriptBox["u", "5"], "\[GreaterEqual]", " ", "0"}], ",", "  ", 
+     RowBox[{
+      SubscriptBox["u", "6"], "\[GreaterEqual]", " ", "0"}], ",", "  ", 
+     RowBox[{
+      SubscriptBox["u", "7"], "\[GreaterEqual]", " ", "0"}]}], "}"}], ",", 
+   "\[IndentingNewLine]", " ", 
+   RowBox[{"{", " ", 
+    RowBox[{
+     SubscriptBox["u", "1"], ",", 
+     SubscriptBox["u", "2"], ",", 
+     SubscriptBox["u", "3"], ",", 
+     SubscriptBox["u", "4"], ",", 
+     SubscriptBox["u", "5"], ",", 
+     SubscriptBox["u", "6"], ",", 
+     SubscriptBox["u", "7"]}], "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.7306478274855127`*^9, 3.7306478354957714`*^9}, {
+  3.7306478861327553`*^9, 3.730647934939011*^9}, {3.730648140479907*^9, 
+  3.7306484747860584`*^9}, {3.730731617308195*^9, 3.730731639411322*^9}, {
+  3.730731898910687*^9, 
+  3.7307319024547043`*^9}},ExpressionUUID->"b44a6d1a-fdae-432e-9739-\
+ae979ae92d12"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"1", ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{
+      SubscriptBox["u", "1"], "\[Rule]", "0"}], ",", 
+     RowBox[{
+      SubscriptBox["u", "2"], "\[Rule]", "0"}], ",", 
+     RowBox[{
+      SubscriptBox["u", "3"], "\[Rule]", "0"}], ",", 
+     RowBox[{
+      SubscriptBox["u", "4"], "\[Rule]", "0"}], ",", 
+     RowBox[{
+      SubscriptBox["u", "5"], "\[Rule]", "0"}], ",", 
+     RowBox[{
+      SubscriptBox["u", "6"], "\[Rule]", "1"}], ",", 
+     RowBox[{
+      SubscriptBox["u", "7"], "\[Rule]", "0"}]}], "}"}]}], "}"}]], "Output",
+ CellChangeTimes->{3.730648477060008*^9, 3.730731641866168*^9, 
+  3.730731908087195*^9},ExpressionUUID->"bf92cdb6-ac84-43c7-9944-\
+16d2bb0d994f"]
+}, Open  ]],
+
+Cell["Sedaj naredimo dual za 2. igralca.", "Text",
+ CellChangeTimes->{{3.730738697786968*^9, 
+  3.7307387263262*^9}},ExpressionUUID->"2369a920-62ee-44cb-a9da-35191b8e1daf"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Maximize", "[", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{
+      SubscriptBox["v", "1"], "+", 
+      SubscriptBox["v", "2"], "+", 
+      SubscriptBox["v", "3"], "+", 
+      SubscriptBox["v", "4"], "+", 
+      SubscriptBox["v", "5"], "+", 
+      SubscriptBox["v", "6"], "+", 
+      SubscriptBox["v", "7"]}], ",", " ", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{
+       SubscriptBox["v", "1"], "+", 
+       SubscriptBox["v", "2"], "+", 
+       SubscriptBox["v", "3"], "+", 
+       SubscriptBox["v", "4"]}], "\[LessEqual]", " ", "1"}], ",", " ", 
+     "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{
+       SubscriptBox["v", "1"], "+", 
+       SubscriptBox["v", "2"], "+", 
+       SubscriptBox["v", "3"], "+", 
+       SubscriptBox["v", "4"], "+", 
+       SubscriptBox["v", "5"]}], " ", "\[LessEqual]", " ", "1"}], ",", 
+     "\[IndentingNewLine]", " ", 
+     RowBox[{
+      RowBox[{
+       SubscriptBox["v", "1"], "+", 
+       SubscriptBox["v", "2"], "+", 
+       SubscriptBox["v", "3"], "+", 
+       SubscriptBox["v", "4"], "+", 
+       SubscriptBox["v", "5"], "+", 
+       SubscriptBox["v", "6"], "+", 
+       SubscriptBox["v", "7"]}], " ", "\[LessEqual]", " ", "1"}], ",", 
+     "\[IndentingNewLine]", " ", 
+     RowBox[{
+      RowBox[{
+       SubscriptBox["v", "1"], "+", 
+       SubscriptBox["v", "2"], "+", 
+       SubscriptBox["v", "3"], "+", 
+       SubscriptBox["v", "4"], "+", 
+       SubscriptBox["v", "6"], "+", 
+       RowBox[{"2", 
+        SubscriptBox["v", "7"]}]}], " ", "\[LessEqual]", " ", "1"}], ",", 
+     "\[IndentingNewLine]", " ", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"2", 
+        SubscriptBox["v", "1"]}], "+", 
+       SubscriptBox["v", "2"], "+", 
+       SubscriptBox["v", "3"], "+", 
+       RowBox[{"2", 
+        SubscriptBox["v", "4"]}], "+", 
+       SubscriptBox["v", "5"], "+", 
+       SubscriptBox["v", "6"]}], " ", "\[LessEqual]", " ", "1"}], ",", " ", 
+     "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"2", 
+        SubscriptBox["v", "1"]}], "+", 
+       RowBox[{"2", 
+        SubscriptBox["v", "2"]}], "+", 
+       SubscriptBox["v", "3"], "+", 
+       SubscriptBox["v", "4"], "+", 
+       SubscriptBox["v", "5"], "+", 
+       SubscriptBox["v", "6"], "+", 
+       SubscriptBox["v", "7"]}], " ", "\[LessEqual]", " ", "1"}], ",", 
+     "\[IndentingNewLine]", " ", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"2", 
+        SubscriptBox["v", "1"]}], "+", 
+       RowBox[{"2", 
+        SubscriptBox["v", "2"]}], "+", 
+       SubscriptBox["v", "3"], "+", 
+       RowBox[{"2", 
+        SubscriptBox["v", "5"]}], "+", 
+       SubscriptBox["v", "6"], "+", 
+       SubscriptBox["v", "7"]}], " ", "\[LessEqual]", " ", "1"}], ",", 
+     "\[IndentingNewLine]", " ", 
+     RowBox[{
+      SubscriptBox["v", "1"], "\[GreaterEqual]", " ", "0"}], ",", " ", 
+     RowBox[{
+      SubscriptBox["v", "2"], "\[GreaterEqual]", " ", "0"}], ",", " ", 
+     RowBox[{
+      SubscriptBox["v", "3"], "\[GreaterEqual]", " ", "0"}], ",", " ", 
+     RowBox[{
+      SubscriptBox["v", "4"], "\[GreaterEqual]", " ", "0"}], ",", " ", 
+     "\[IndentingNewLine]", 
+     RowBox[{
+      SubscriptBox["v", "5"], "\[GreaterEqual]", " ", "0"}], ",", " ", 
+     RowBox[{
+      SubscriptBox["v", "6"], "\[GreaterEqual]", " ", "0"}], ",", " ", 
+     RowBox[{
+      SubscriptBox["v", "7"], "\[GreaterEqual]", " ", "0"}]}], "}"}], ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"{", 
+    RowBox[{
+     SubscriptBox["v", "1"], ",", " ", 
+     SubscriptBox["v", "2"], ",", " ", 
+     SubscriptBox["v", "3"], ",", 
+     SubscriptBox["v", "4"], ",", " ", 
+     SubscriptBox["v", "5"], ",", 
+     SubscriptBox["v", "6"], ",", " ", 
+     SubscriptBox["v", "7"]}], "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.7306487958482676`*^9, 3.730648896866289*^9}, {
+  3.7306489603093386`*^9, 3.730649043308878*^9}, {3.7306491379230967`*^9, 
+  3.730649176153303*^9}, {3.730649221874415*^9, 3.730649310390164*^9}, {
+  3.730732101950165*^9, 
+  3.730732119272019*^9}},ExpressionUUID->"e8434aa6-11fc-4bd6-874c-\
+3c3dacbc9ff0"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"1", ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{
+      SubscriptBox["v", "1"], "\[Rule]", "0"}], ",", 
+     RowBox[{
+      SubscriptBox["v", "2"], "\[Rule]", "0"}], ",", 
+     RowBox[{
+      SubscriptBox["v", "3"], "\[Rule]", "1"}], ",", 
+     RowBox[{
+      SubscriptBox["v", "4"], "\[Rule]", "0"}], ",", 
+     RowBox[{
+      SubscriptBox["v", "5"], "\[Rule]", "0"}], ",", 
+     RowBox[{
+      SubscriptBox["v", "6"], "\[Rule]", "0"}], ",", 
+     RowBox[{
+      SubscriptBox["v", "7"], "\[Rule]", "0"}]}], "}"}]}], "}"}]], "Output",
+ CellChangeTimes->{3.730649311045158*^9, 
+  3.73073212189539*^9},ExpressionUUID->"682fb91a-45cc-4668-8011-89299e7bc6a2"]
+}, Open  ]],
+
+Cell["\<\
+Vidimo, da res dobimo isto vrednost. V prvem primeru smo minimizirali izgubo \
+prvega, v drugem pa maksimizirali dobi\[CHacek]ek drugega igralca. 
+
+Igralca imata torej \[CHacek]isto strategijo - 1. vedno izbere 6. \
+mo\[ZHacek]nost, 2. pa vedno 3. mo\[ZHacek]nost. Pri izbiri teh strategij je \
+vrednost igre enaka 1.
+Opomba: to je le ena izmed mo\[ZHacek]nih strategij, pri kateri je vrednost \
+igre enaka optimalni vrednosti.\
+\>", "Text",
+ CellChangeTimes->{{3.7307322040749063`*^9, 3.730732258834041*^9}, {
+  3.730738079569977*^9, 3.7307381043899117`*^9}, {3.7307385646338797`*^9, 
+  3.730738623805163*^9}},ExpressionUUID->"764ca572-d2e2-4866-8e20-\
+90d2db75aaa9"]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{967, 855},
+WindowMargins->{{0, Automatic}, {Automatic, 0}},
+FrontEndVersion->"11.2 for Mac OS X x86 (32-bit, 64-bit Kernel) (September \
+10, 2017)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 246, 5, 98, "Title",ExpressionUUID->"57f5883e-c118-4feb-b40d-9c1ee0cbb99b"],
+Cell[829, 29, 684, 12, 81, "Text",ExpressionUUID->"9a3beb89-befe-4d44-ab77-710ad075d005"],
+Cell[CellGroupData[{
+Cell[1538, 45, 263, 5, 69, "Chapter",ExpressionUUID->"02e186d1-0d2f-4cb4-a71a-4afc6aeadd96"],
+Cell[1804, 52, 1062, 23, 334, "Text",ExpressionUUID->"ff3708f4-6302-4b44-9a2b-3b461fb1b112"],
+Cell[2869, 77, 333, 7, 35, "Text",ExpressionUUID->"c4725e31-48d4-4c61-9e37-ca8e771be789"],
+Cell[CellGroupData[{
+Cell[3227, 88, 1014, 25, 129, "Input",ExpressionUUID->"04d6db5d-a405-421d-bb89-4f4b7e89b096"],
+Cell[4244, 115, 1121, 30, 56, "Output",ExpressionUUID->"471e70c3-f2a8-4cd3-b8b7-cb0c5532dbf8"]
+}, Open  ]],
+Cell[5380, 148, 1248, 21, 196, "Text",ExpressionUUID->"8485ce3d-21b1-4938-9d8e-79052cba706a"],
+Cell[6631, 171, 376, 7, 35, "Text",ExpressionUUID->"38145ff5-cd9a-4437-9386-d0d5fee60577"],
+Cell[CellGroupData[{
+Cell[7032, 182, 446, 10, 30, "Input",ExpressionUUID->"7cf69126-105c-4e34-a08d-729e1d9f5528"],
+Cell[7481, 194, 1027, 27, 56, "Output",ExpressionUUID->"c6155731-9fa5-4bd1-ba0e-135c4fd6cf0f"]
+}, Open  ]],
+Cell[8523, 224, 269, 6, 35, "Text",ExpressionUUID->"d9d50e81-9a3b-43d3-a6f2-6c3602b96393"],
+Cell[CellGroupData[{
+Cell[8817, 234, 211, 4, 30, "Input",ExpressionUUID->"20437d22-056d-444e-9e54-5a816d3d6277"],
+Cell[9031, 240, 953, 26, 56, "Output",ExpressionUUID->"7ccc9d88-9cc7-499f-87c8-95bac6dd01d7"]
+}, Open  ]],
+Cell[9999, 269, 739, 13, 81, "Text",ExpressionUUID->"c370ff18-3626-400c-8856-8245c0c65274"],
+Cell[CellGroupData[{
+Cell[10763, 286, 4097, 112, 220, "Input",ExpressionUUID->"b44a6d1a-fdae-432e-9739-ae979ae92d12"],
+Cell[14863, 400, 724, 21, 34, "Output",ExpressionUUID->"bf92cdb6-ac84-43c7-9944-16d2bb0d994f"]
+}, Open  ]],
+Cell[15602, 424, 172, 2, 35, "Text",ExpressionUUID->"2369a920-62ee-44cb-a9da-35191b8e1daf"],
+Cell[CellGroupData[{
+Cell[15799, 430, 4071, 113, 241, "Input",ExpressionUUID->"e8434aa6-11fc-4bd6-874c-3c3dacbc9ff0"],
+Cell[19873, 545, 699, 20, 34, "Output",ExpressionUUID->"682fb91a-45cc-4668-8011-89299e7bc6a2"]
+}, Open  ]],
+Cell[20587, 568, 678, 13, 127, "Text",ExpressionUUID->"764ca572-d2e2-4866-8e20-90d2db75aaa9"]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+

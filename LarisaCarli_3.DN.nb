@@ -1,0 +1,738 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 11.1' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     32432,        730]
+NotebookOptionsPosition[     30500,        689]
+NotebookOutlinePosition[     30858,        705]
+CellTagsIndexPosition[     30815,        702]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[TextData[StyleBox["3. Doma\[CHacek]a naloga",
+ FontTracking->"Plain",
+ FontColor->RGBColor[1, 0, 0]]], "Title",
+ CellChangeTimes->{{3.7304499313010445`*^9, 3.7304499398687572`*^9}, {
+  3.730730306645092*^9, 3.730730306792767*^9}, {3.7312942214415693`*^9, 
+  3.731294222926052*^9}},ExpressionUUID->"57f5883e-c118-4feb-b40d-\
+9c1ee0cbb99b"],
+
+Cell["\<\
+Maksimalen pretok omre\[ZHacek]ja podan z grafom - ugotovi maksimalen pretok \
+od S do T.
+\
+\>", "Text",
+ CellChangeTimes->{{3.7304499892900195`*^9, 3.7304501198258753`*^9}, {
+  3.7307216686931963`*^9, 3.730721668856728*^9}, {3.7307303030238333`*^9, 
+  3.730730367164645*^9}, {3.731168075146645*^9, 3.731168080843401*^9}, {
+  3.731294235750311*^9, 
+  3.73129426347076*^9}},ExpressionUUID->"9a3beb89-befe-4d44-ab77-\
+710ad075d005"],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["Re\[SHacek]itev:",
+ FontColor->RGBColor[1, 0, 0]]], "Chapter",
+ CellChangeTimes->{{3.730721527855692*^9, 3.730721538249179*^9}, {
+  3.730721601859852*^9, 
+  3.7307216070678663`*^9}},ExpressionUUID->"02e186d1-0d2f-4cb4-a71a-\
+4afc6aeadd96"],
+
+Cell[TextData[{
+ "Problem je zastavljen malenkost druga\[CHacek]e kot kot smo navajeni - \
+omejitve povezav imamo tudi navzdol. Ker za vsako povezavo vemo, da skozi njo \
+mora ste\[CHacek]i tok dolo\[CHacek]ene vrednosti, lahko problem \
+re\[SHacek]imo tako, da re\[SHacek]imo manj\[SHacek]i problem, ki je pa \
+navaden problem maksimalnega pretoka z ni\[CHacek]elnim omre\[ZHacek]jem in \
+re\[SHacek]itvi tega problema pri\[SHacek]tejemo vrednosti omre\[ZHacek]ja z \
+\[ZHacek]e dolo\[CHacek]enimi povezavami. Zadnjo omre\[ZHacek]je je omre\
+\[ZHacek]je z vrednostmi minimalnih kapacitet (torej omejitev navzdol), \
+navaden problem maksimalnega pretoka pa dobimo tako, da kot kapacitete \
+povezav upo\[SHacek]tevamo razlike povezav med zgornjo in spodnjo kapaciteto. \
+\n\nRezultat je zagotovo skupek obeh re\[SHacek]itev (matrike minimalnih \
+kapacitet osnovnega omre\[ZHacek]ja in re\[SHacek]itve za omre\[ZHacek]je \
+residualnega omre\[ZHacek]ja, ki nam ga dolo\[CHacek]a prvoten graf), ker nam \
+minimalne kapacitete postavijo nujno izpolnljiv pogoj, da skozi njih gre \
+najmanj toliko enot. Ker te enote morajo iti skozi, jih pri re\[SHacek]evanju \
+nadaljenjega problema (koliko dodatnih enot \[SHacek]e gre skozi posamezno \
+povezavo) ne potrebujemo. Dovolj je, da pri rezultatu upo\[SHacek]tevamo, da \
+mora skozi omre\[ZHacek]je iti \[SHacek]e tista, \[ZHacek]e prej \
+dolo\[CHacek]ena koli\[CHacek]ina enot.  \n\nZapi\[SHacek]imo spodnje \
+omejitve v matriko s. Pri tem stolpci od leve proti desni predstavljajo vozli\
+\[SHacek]\[CHacek]a S A B C ... T, vrstice prav tako S A B C ... T, elementi ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["a", "ij"], TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "8a39b994-dd4c-4a25-8b5d-66108a112b61"],
+ " pa povezavo iz vozli\[SHacek]\[CHacek]a i do vozli\[SHacek]\[CHacek]a j. \
+Ker iz T ne gre nobena povezava, je zadnja vrstica prazna (same \
+ni\[CHacek]le), prav tako je pa prazen prvi stolpec (ni povezav, ki ka\
+\[ZHacek]ejo v S). \n"
+}], "Text",
+ CellChangeTimes->{{3.730450198739558*^9, 3.7304502698628416`*^9}, {
+   3.7307216797129927`*^9, 3.730721772105876*^9}, {3.730721806507986*^9, 
+   3.7307220831006403`*^9}, {3.7307224589995413`*^9, 3.730722502103677*^9}, {
+   3.730730402741795*^9, 3.730730519764513*^9}, 3.730730566081954*^9, {
+   3.730730613353323*^9, 3.730731526674138*^9}, {3.731167805060439*^9, 
+   3.7311678875857553`*^9}, {3.7311680879178267`*^9, 3.731168121076303*^9}, {
+   3.731168176230513*^9, 3.731168213682897*^9}, {3.731168246600696*^9, 
+   3.731168302736619*^9}, {3.7311683939160748`*^9, 3.731168518617594*^9}, {
+   3.731168549872128*^9, 3.7311689254355097`*^9}, {3.731168987869185*^9, 
+   3.7311690715005817`*^9}, {3.731170311489471*^9, 3.731170347453741*^9}, 
+   3.7312942799092875`*^9, {3.73130222910329*^9, 3.7313022390257697`*^9}, {
+   3.731479319390583*^9, 3.731479339407865*^9}, {3.731479371094907*^9, 
+   3.731479482069613*^9}, {3.731479524663226*^9, 3.7314797101951513`*^9}, 
+   3.731487545053319*^9, {3.7315078320484037`*^9, 3.731508044421968*^9}, {
+   3.7317693471497393`*^9, 
+   3.731769514992991*^9}},ExpressionUUID->"ff3708f4-6302-4b44-9a2b-\
+3b461fb1b112"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"r1", " ", "=", " ", 
+  RowBox[{"(", "\[NoBreak]", GridBox[{
+     {"0", "2", "2", "10", "8", "0", "0", "0", "0", "0"},
+     {"0", "0", "0", "0", "0", "6", "0", "0", "0", "0"},
+     {"0", "4", "0", "0", "0", "0", "4", "0", "0", "0"},
+     {"0", "0", "0", "0", "0", "0", "0", "4", "0", "0"},
+     {"0", "0", "0", "0", "0", "0", "0", "0", "6", "0"},
+     {"0", "0", "0", "0", "0", "0", "0", "0", "0", "11"},
+     {"0", "0", "0", "0", "0", "4", "0", "0", "0", "4"},
+     {"0", "0", "0", "0", "0", "0", "6", "0", "0", "4"},
+     {"0", "0", "0", "0", "0", "0", "0", "2", "0", "4"},
+     {"0", "0", "0", "0", "0", "0", "0", "0", "0", "0"}
+    }], "\[NoBreak]", ")"}]}]], "Input",
+ CellChangeTimes->{{3.731479719966675*^9, 3.731479727456299*^9}, {
+  3.731508177137062*^9, 
+  3.731508177721163*^9}},ExpressionUUID->"57f0515f-bb5a-4e79-829d-\
+52b1c337df62"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+    "0", ",", "2", ",", "2", ",", "10", ",", "8", ",", "0", ",", "0", ",", 
+     "0", ",", "0", ",", "0"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+    "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "6", ",", "0", ",", "0",
+      ",", "0", ",", "0"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+    "0", ",", "4", ",", "0", ",", "0", ",", "0", ",", "0", ",", "4", ",", "0",
+      ",", "0", ",", "0"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+    "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "4",
+      ",", "0", ",", "0"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+    "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0",
+      ",", "6", ",", "0"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+    "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0",
+      ",", "0", ",", "11"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+    "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "4", ",", "0", ",", "0",
+      ",", "0", ",", "4"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+    "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "6", ",", "0",
+      ",", "0", ",", "4"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+    "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "2",
+      ",", "0", ",", "4"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+    "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0",
+      ",", "0", ",", "0"}], "}"}]}], "}"}]], "Output",
+ CellChangeTimes->{3.731479730942554*^9, 3.73150817930027*^9, 
+  3.731768614223246*^9},ExpressionUUID->"fc77dc6f-fb35-4561-8bbd-\
+69a1a10cb639"]
+}, Open  ]],
+
+Cell["\<\
+Re\[SHacek]imo sedaj problem z kapacitetami enakimi razliki zgornjih in \
+spodnjih kapacitet.
+\
+\>", "Text",
+ CellChangeTimes->{{3.731479740107172*^9, 3.731479740278222*^9}, {
+  3.7314875472610826`*^9, 3.731487547456399*^9}, {3.731487613775723*^9, 
+  3.7314876444047832`*^9}, {3.7314876929874487`*^9, 3.731487703257929*^9}, {
+  3.7314884782567663`*^9, 
+  3.731488500208911*^9}},ExpressionUUID->"e9b4cc44-45d5-4c5f-a295-\
+73765c5429cd"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"g", "=", 
+   RowBox[{"WeightedAdjacencyGraph", "[", 
+    RowBox[{
+     RowBox[{"(", "\[NoBreak]", GridBox[{
+        {"0", "2", "2", "2", "10", "0", "0", "0", "0", "0"},
+        {"0", "0", "0", "0", "0", "2", "0", "0", "0", "0"},
+        {"0", "2", "0", "0", "0", "0", "6", "0", "0", "0"},
+        {"0", "0", "0", "0", "0", "0", "0", "2", "0", "0"},
+        {"0", "0", "6", "0", "0", "0", "0", "0", "2", "0"},
+        {"0", "0", "0", "0", "0", "0", "0", "0", "0", "5"},
+        {"0", "0", "0", "0", "0", "1", "0", "0", "0", "2"},
+        {"0", "0", "0", "0", "0", "0", "0", "0", "0", "2"},
+        {"0", "0", "0", "0", "0", "0", "0", "4", "0", "6"},
+        {"0", "0", "0", "0", "0", "0", "0", "0", "0", "0"}
+       }], "\[NoBreak]", ")"}], "/.", 
+     RowBox[{"{", 
+      RowBox[{"0", "\[Rule]", "Infinity"}], "}"}]}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{"\[ScriptCapitalF]", " ", "=", " ", 
+  RowBox[{"FindMaximumFlow", "[", 
+   RowBox[{
+   "g", ",", " ", "1", ",", " ", "10", ",", " ", "\"\<OptimumFlowData\>\"", 
+    " ", ",", 
+    RowBox[{"EdgeCapacity", "\[Rule]", "EdgeWeight"}]}], "]"}]}]}], "Input",
+ CellChangeTimes->{{3.7313007423117437`*^9, 3.731300747781252*^9}, {
+   3.731301381004814*^9, 3.73130139589764*^9}, 3.7313014370098*^9, {
+   3.731301604871261*^9, 3.731301620309808*^9}, 3.731301751528656*^9, {
+   3.731302058653839*^9, 3.7313020717484074`*^9}, {3.7313021061723905`*^9, 
+   3.7313021691740313`*^9}, {3.731488761706765*^9, 3.731488762287044*^9}, {
+   3.7315074449073343`*^9, 3.7315074912015142`*^9}, {3.73168690989054*^9, 
+   3.7316869511914253`*^9}},ExpressionUUID->"de4b18f7-f933-420e-bf96-\
+66805285e586"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{
+   TagBox["OptimumFlowData",
+    "SummaryHead"], "[", 
+   DynamicModuleBox[{Typeset`open$$ = False, Typeset`embedState$$ = "Ready"}, 
+    TemplateBox[{PaneSelectorBox[{False -> GridBox[{{
+            PaneBox[
+             ButtonBox[
+              DynamicBox[
+               FEPrivate`FrontEndResource[
+               "FEBitmaps", "SquarePlusIconMedium"]], 
+              ButtonFunction :> (Typeset`open$$ = True), Appearance -> None, 
+              Evaluator -> Automatic, Method -> "Preemptive"], 
+             Alignment -> {Center, Center}, ImageSize -> 
+             Dynamic[{
+               Automatic, 3.5 CurrentValue["FontCapHeight"]/
+                AbsoluteCurrentValue[Magnification]}]], 
+            GraphicsBox[
+             NamespaceBox[{{
+                Directive[
+                 GrayLevel[0.55], 
+                 AbsoluteThickness[1.5]], FontFamily -> "Arial", 
+                StyleBox[{
+                  LineBox[{
+                    DynamicLocation["VertexID$1", Automatic, Center], 
+                    DynamicLocation["VertexID$2", Automatic, Center]}]}, 
+                 Directive[
+                  Hue[1, 1, 0.7], 
+                  Opacity[1]], StripOnInput -> False], {
+                 LineBox[{
+                   DynamicLocation["VertexID$1", Automatic, Center], 
+                   DynamicLocation["VertexID$3", Automatic, Center]}]}, 
+                StyleBox[{
+                  LineBox[{
+                    DynamicLocation["VertexID$2", Automatic, Center], 
+                    DynamicLocation["VertexID$3", Automatic, Center]}]}, 
+                 Directive[
+                  Hue[1, 1, 0.7], 
+                  Opacity[1]], StripOnInput -> False], 
+                StyleBox[{
+                  LineBox[{
+                    DynamicLocation["VertexID$3", Automatic, Center], 
+                    DynamicLocation["VertexID$5", Automatic, Center]}]}, 
+                 Directive[
+                  Hue[1, 1, 0.7], 
+                  Opacity[1]], StripOnInput -> False], {
+                 LineBox[{
+                   DynamicLocation["VertexID$4", Automatic, Center], 
+                   DynamicLocation["VertexID$2", Automatic, Center]}]}, {
+                 LineBox[{
+                   DynamicLocation["VertexID$4", Automatic, Center], 
+                   DynamicLocation["VertexID$5", Automatic, Center]}]}, {
+                 LineBox[{
+                   DynamicLocation["VertexID$4", Automatic, Center], 
+                   DynamicLocation["VertexID$6", Automatic, Center]}]}, 
+                StyleBox[{
+                  LineBox[{
+                    DynamicLocation["VertexID$5", Automatic, Center], 
+                    DynamicLocation["VertexID$6", Automatic, Center]}]}, 
+                 Directive[
+                  Hue[1, 1, 0.7], 
+                  Opacity[1]], StripOnInput -> False]}, {
+                Directive[
+                 GrayLevel[0.55], 
+                 AbsoluteThickness[1.5]], FontFamily -> "Arial", 
+                TagBox[
+                 StyleBox[
+                  DiskBox[{0., 0.}, 0.19499999999999998`], 
+                  Directive[
+                   Hue[1, 1, 0.7], 
+                   EdgeForm[{
+                    Hue[1, 1, 0.7], 
+                    Opacity[1]}]], StripOnInput -> False], "DynamicName", 
+                 BoxID -> "VertexID$1"], 
+                TagBox[
+                 StyleBox[
+                  DiskBox[{0.85, -1.2}, 0.19499999999999998`], 
+                  Directive[
+                   Hue[1, 1, 0.7], 
+                   EdgeForm[{
+                    Hue[1, 1, 0.7], 
+                    Opacity[1]}]], StripOnInput -> False], "DynamicName", 
+                 BoxID -> "VertexID$2"], 
+                TagBox[
+                 StyleBox[
+                  DiskBox[{0.85, 1.2}, 0.19499999999999998`], 
+                  Directive[
+                   Hue[1, 1, 0.7], 
+                   EdgeForm[{
+                    Hue[1, 1, 0.7], 
+                    Opacity[1]}]], StripOnInput -> False], "DynamicName", 
+                 BoxID -> "VertexID$3"], 
+                TagBox[
+                 DiskBox[{2.15, -1.2}, 0.19499999999999998`], "DynamicName", 
+                 BoxID -> "VertexID$4"], 
+                TagBox[
+                 StyleBox[
+                  DiskBox[{2.15, 1.2}, 0.19499999999999998`], 
+                  Directive[
+                   Hue[1, 1, 0.7], 
+                   EdgeForm[{
+                    Hue[1, 1, 0.7], 
+                    Opacity[1]}]], StripOnInput -> False], "DynamicName", 
+                 BoxID -> "VertexID$5"], 
+                TagBox[
+                 StyleBox[
+                  DiskBox[{3., 0.}, 0.19499999999999998`], 
+                  Directive[
+                   Hue[1, 1, 0.7], 
+                   EdgeForm[{
+                    Hue[1, 1, 0.7], 
+                    Opacity[1]}]], StripOnInput -> False], "DynamicName", 
+                 BoxID -> "VertexID$6"]}}], {
+             AspectRatio -> 1, Background -> GrayLevel[0.93], 
+              BaseStyle -> {FontFamily -> "Arial"}, 
+              FrameLabel -> {None, None}, FrameStyle -> Directive[
+                Thickness[Tiny], 
+                GrayLevel[0.7]], Frame -> True, 
+              FrameTicks -> {{None, None}, {None, None}}, GridLinesStyle -> 
+              Directive[
+                GrayLevel[0.5, 0.4]], ImagePadding -> 0, ImageSize -> 
+              Dynamic[{
+                Automatic, (3.5 CurrentValue["FontCapHeight"])/
+                 AbsoluteCurrentValue[Magnification]}], 
+              LabelStyle -> {FontFamily -> "Arial"}, 
+              PlotRange -> {{-0.5, 3.5}, {-2, 2}}}], 
+            GridBox[{{
+               RowBox[{
+                 TagBox["\"Flow value: \"", "SummaryItemAnnotation"], 
+                 "\[InvisibleSpace]", 
+                 TagBox["9", "SummaryItem"]}]}}, 
+             GridBoxAlignment -> {
+              "Columns" -> {{Left}}, "Rows" -> {{Automatic}}}, AutoDelete -> 
+             False, 
+             GridBoxItemSize -> {
+              "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+             GridBoxSpacings -> {"Columns" -> {{2}}, "Rows" -> {{Automatic}}},
+              BaseStyle -> {
+              ShowStringCharacters -> False, NumberMarks -> False, 
+               PrintPrecision -> 3, ShowSyntaxStyles -> False}]}}, 
+          GridBoxAlignment -> {"Rows" -> {{Top}}}, AutoDelete -> False, 
+          GridBoxItemSize -> {
+           "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+          BaselinePosition -> {1, 1}], True -> GridBox[{{
+            PaneBox[
+             ButtonBox[
+              DynamicBox[
+               FEPrivate`FrontEndResource[
+               "FEBitmaps", "SquareMinusIconMedium"]], 
+              ButtonFunction :> (Typeset`open$$ = False), Appearance -> None, 
+              Evaluator -> Automatic, Method -> "Preemptive"], 
+             Alignment -> {Center, Center}, ImageSize -> 
+             Dynamic[{
+               Automatic, 3.5 CurrentValue["FontCapHeight"]/
+                AbsoluteCurrentValue[Magnification]}]], 
+            GraphicsBox[
+             NamespaceBox[{{
+                Directive[
+                 GrayLevel[0.55], 
+                 AbsoluteThickness[1.5]], FontFamily -> "Arial", 
+                StyleBox[{
+                  LineBox[{
+                    DynamicLocation["VertexID$1", Automatic, Center], 
+                    DynamicLocation["VertexID$2", Automatic, Center]}]}, 
+                 Directive[
+                  Hue[1, 1, 0.7], 
+                  Opacity[1]], StripOnInput -> False], {
+                 LineBox[{
+                   DynamicLocation["VertexID$1", Automatic, Center], 
+                   DynamicLocation["VertexID$3", Automatic, Center]}]}, 
+                StyleBox[{
+                  LineBox[{
+                    DynamicLocation["VertexID$2", Automatic, Center], 
+                    DynamicLocation["VertexID$3", Automatic, Center]}]}, 
+                 Directive[
+                  Hue[1, 1, 0.7], 
+                  Opacity[1]], StripOnInput -> False], 
+                StyleBox[{
+                  LineBox[{
+                    DynamicLocation["VertexID$3", Automatic, Center], 
+                    DynamicLocation["VertexID$5", Automatic, Center]}]}, 
+                 Directive[
+                  Hue[1, 1, 0.7], 
+                  Opacity[1]], StripOnInput -> False], {
+                 LineBox[{
+                   DynamicLocation["VertexID$4", Automatic, Center], 
+                   DynamicLocation["VertexID$2", Automatic, Center]}]}, {
+                 LineBox[{
+                   DynamicLocation["VertexID$4", Automatic, Center], 
+                   DynamicLocation["VertexID$5", Automatic, Center]}]}, {
+                 LineBox[{
+                   DynamicLocation["VertexID$4", Automatic, Center], 
+                   DynamicLocation["VertexID$6", Automatic, Center]}]}, 
+                StyleBox[{
+                  LineBox[{
+                    DynamicLocation["VertexID$5", Automatic, Center], 
+                    DynamicLocation["VertexID$6", Automatic, Center]}]}, 
+                 Directive[
+                  Hue[1, 1, 0.7], 
+                  Opacity[1]], StripOnInput -> False]}, {
+                Directive[
+                 GrayLevel[0.55], 
+                 AbsoluteThickness[1.5]], FontFamily -> "Arial", 
+                TagBox[
+                 StyleBox[
+                  DiskBox[{0., 0.}, 0.19499999999999998`], 
+                  Directive[
+                   Hue[1, 1, 0.7], 
+                   EdgeForm[{
+                    Hue[1, 1, 0.7], 
+                    Opacity[1]}]], StripOnInput -> False], "DynamicName", 
+                 BoxID -> "VertexID$1"], 
+                TagBox[
+                 StyleBox[
+                  DiskBox[{0.85, -1.2}, 0.19499999999999998`], 
+                  Directive[
+                   Hue[1, 1, 0.7], 
+                   EdgeForm[{
+                    Hue[1, 1, 0.7], 
+                    Opacity[1]}]], StripOnInput -> False], "DynamicName", 
+                 BoxID -> "VertexID$2"], 
+                TagBox[
+                 StyleBox[
+                  DiskBox[{0.85, 1.2}, 0.19499999999999998`], 
+                  Directive[
+                   Hue[1, 1, 0.7], 
+                   EdgeForm[{
+                    Hue[1, 1, 0.7], 
+                    Opacity[1]}]], StripOnInput -> False], "DynamicName", 
+                 BoxID -> "VertexID$3"], 
+                TagBox[
+                 DiskBox[{2.15, -1.2}, 0.19499999999999998`], "DynamicName", 
+                 BoxID -> "VertexID$4"], 
+                TagBox[
+                 StyleBox[
+                  DiskBox[{2.15, 1.2}, 0.19499999999999998`], 
+                  Directive[
+                   Hue[1, 1, 0.7], 
+                   EdgeForm[{
+                    Hue[1, 1, 0.7], 
+                    Opacity[1]}]], StripOnInput -> False], "DynamicName", 
+                 BoxID -> "VertexID$5"], 
+                TagBox[
+                 StyleBox[
+                  DiskBox[{3., 0.}, 0.19499999999999998`], 
+                  Directive[
+                   Hue[1, 1, 0.7], 
+                   EdgeForm[{
+                    Hue[1, 1, 0.7], 
+                    Opacity[1]}]], StripOnInput -> False], "DynamicName", 
+                 BoxID -> "VertexID$6"]}}], {
+             AspectRatio -> 1, Background -> GrayLevel[0.93], 
+              BaseStyle -> {FontFamily -> "Arial"}, 
+              FrameLabel -> {None, None}, FrameStyle -> Directive[
+                Thickness[Tiny], 
+                GrayLevel[0.7]], Frame -> True, 
+              FrameTicks -> {{None, None}, {None, None}}, GridLinesStyle -> 
+              Directive[
+                GrayLevel[0.5, 0.4]], ImagePadding -> 0, ImageSize -> 
+              Dynamic[{
+                Automatic, (3.5 CurrentValue["FontCapHeight"])/
+                 AbsoluteCurrentValue[Magnification]}], 
+              LabelStyle -> {FontFamily -> "Arial"}, 
+              PlotRange -> {{-0.5, 3.5}, {-2, 2}}}], 
+            GridBox[{{
+               RowBox[{
+                 TagBox["\"Flow value: \"", "SummaryItemAnnotation"], 
+                 "\[InvisibleSpace]", 
+                 TagBox["9", "SummaryItem"]}]}, {
+               RowBox[{
+                 TagBox[
+                 "\"Contributing vertices: \"", "SummaryItemAnnotation"], 
+                 "\[InvisibleSpace]", 
+                 TagBox["10", "SummaryItem"]}]}, {
+               RowBox[{
+                 TagBox["\"Contributing edges: \"", "SummaryItemAnnotation"], 
+                 "\[InvisibleSpace]", 
+                 TagBox["13", "SummaryItem"]}]}}, 
+             GridBoxAlignment -> {
+              "Columns" -> {{Left}}, "Rows" -> {{Automatic}}}, AutoDelete -> 
+             False, GridBoxItemSize -> {
+              "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+             GridBoxSpacings -> {"Columns" -> {{2}}, "Rows" -> {{Automatic}}},
+              BaseStyle -> {
+              ShowStringCharacters -> False, NumberMarks -> False, 
+               PrintPrecision -> 3, ShowSyntaxStyles -> False}]}}, 
+          GridBoxAlignment -> {"Rows" -> {{Top}}}, AutoDelete -> False, 
+          GridBoxItemSize -> {
+           "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+          BaselinePosition -> {1, 1}]}, 
+       Dynamic[Typeset`open$$], ImageSize -> Automatic]},
+     "SummaryPanel",
+     DisplayFunction->(
+      ButtonBox[#, Active -> False, Alignment -> Left, 
+       Appearance -> {
+        "Default" -> 
+         FrontEnd`FileName[{"Typeset", "SummaryBox"}, "Panel.9.png"]}, 
+       FrameMargins -> 7, BaseStyle -> {}, 
+       DefaultBaseStyle -> {"Panel", Background -> None}, BaselinePosition -> 
+       Baseline]& )],
+    DynamicModuleValues:>{}], "]"}],
+  OptimumFlowData[1, 
+   Graph[{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}, {
+     SparseArray[
+     Automatic, {10, 10}, 0, {
+      1, {{0, 4, 5, 7, 8, 10, 11, 13, 14, 16, 16}, {{2}, {3}, {4}, {5}, {6}, {
+        2}, {7}, {8}, {3}, {9}, {10}, {6}, {10}, {10}, {8}, {10}}}, Pattern}],
+      Null}, {EdgeWeight -> {2, 2, 2, 10, 2, 2, 6, 2, 6, 2, 5, 1, 2, 2, 4, 
+      6}}], 9, SparseArray[
+   Automatic, {10, 10}, 0, {
+    1, {{0, 2, 3, 5, 6, 8, 9, 11, 12, 13, 13}, {{4}, {5}, {6}, {2}, {7}, {
+      8}, {3}, {9}, {10}, {6}, {10}, {10}, {10}}}, {2, 7, 2, 2, 3, 2, 5, 2, 3,
+      1, 2, 2, 2}}], 9, 1, 10, {}],
+  Editable->False,
+  SelectWithContents->True,
+  Selectable->False]], "Output",
+ CellChangeTimes->{3.731518990416246*^9, 3.73151905258235*^9, 
+  3.731686919366316*^9, 
+  3.731686952813221*^9},ExpressionUUID->"130993eb-2294-40fb-abfd-\
+f4963e5a13f6"]
+}, Open  ]],
+
+Cell["\<\
+Rezultat je torej 9 (tega, ne prvotnega problema), spodaj pa je prikazana mo\
+\[ZHacek]na re\[SHacek]itev problema, s katero dobimo optimalen rezultat.\
+\>", "Text",
+ CellChangeTimes->{
+  3.731507651053611*^9, {3.731507749231224*^9, 3.731507757780486*^9}, {
+   3.731508089909482*^9, 3.731508105264514*^9}, {3.731518358984617*^9, 
+   3.7315183900587463`*^9}, {3.731769730756859*^9, 
+   3.731769737531869*^9}},ExpressionUUID->"b6373cd9-0338-4490-97e3-\
+be26b2be87b5"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(", 
+   RowBox[{"r2", " ", "=", " ", 
+    RowBox[{"\[ScriptCapitalF]", "[", "\"\<FlowMatrix\>\"", "]"}]}], ")"}], 
+  " ", "//", "MatrixForm"}]], "Input",
+ CellChangeTimes->{{3.7315190784423637`*^9, 3.7315190902659807`*^9}, {
+  3.731519123645236*^9, 3.7315191258788853`*^9}, {3.731768526693371*^9, 
+  3.7317685521524677`*^9}, {3.731768582273353*^9, 
+  3.731768587800613*^9}},ExpressionUUID->"ff4e047f-e452-4996-9597-\
+d16d5aaa27be"],
+
+Cell[BoxData[
+ TagBox[
+  RowBox[{"(", "\[NoBreak]", GridBox[{
+     {"0", "0", "0", "2", "7", "0", "0", "0", "0", "0"},
+     {"0", "0", "0", "0", "0", "2", "0", "0", "0", "0"},
+     {"0", "2", "0", "0", "0", "0", "3", "0", "0", "0"},
+     {"0", "0", "0", "0", "0", "0", "0", "2", "0", "0"},
+     {"0", "0", "5", "0", "0", "0", "0", "0", "2", "0"},
+     {"0", "0", "0", "0", "0", "0", "0", "0", "0", "3"},
+     {"0", "0", "0", "0", "0", "1", "0", "0", "0", "2"},
+     {"0", "0", "0", "0", "0", "0", "0", "0", "0", "2"},
+     {"0", "0", "0", "0", "0", "0", "0", "0", "0", "2"},
+     {"0", "0", "0", "0", "0", "0", "0", "0", "0", "0"}
+    },
+    GridBoxAlignment->{
+     "Columns" -> {{Center}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, 
+      "RowsIndexed" -> {}},
+    GridBoxSpacings->{"Columns" -> {
+        Offset[0.27999999999999997`], {
+         Offset[0.7]}, 
+        Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {
+        Offset[0.2], {
+         Offset[0.4]}, 
+        Offset[0.2]}, "RowsIndexed" -> {}}], "\[NoBreak]", ")"}],
+  Function[BoxForm`e$, 
+   MatrixForm[
+   SparseArray[
+    Automatic, {10, 10}, 0, {
+     1, {{0, 2, 3, 5, 6, 8, 9, 11, 12, 13, 13}, {{4}, {5}, {6}, {2}, {7}, {
+       8}, {3}, {9}, {10}, {6}, {10}, {10}, {10}}}, {2, 7, 2, 2, 3, 2, 5, 2, 
+      3, 1, 2, 2, 2}}]]]]], "Output",
+ CellChangeTimes->{
+  3.731768588426332*^9},ExpressionUUID->"d7c62dc0-9256-430b-9990-\
+f843d816757a"]
+}, Open  ]],
+
+Cell["\<\
+S tem smo ugotovili, da smo z upo\[SHacek]tevanjem zgornjih kapacitet zraven \
+enot dolo\[CHacek]enih s omejitvami za spodnje kapacitete spustili po \
+posameznih povezavah \[SHacek]e \[SHacek]tevilo enot prikazanih z matriko r2. \
+Re\[SHacek]itev prvotnega problema je se\[SHacek]tevek matrike tega problema \
+z matriko prvotnih minimalnih kapacitet, ki nam pove, koliko enot smo \
+dejansko spustili \[CHacek]ez prvotno omre\[ZHacek]je (in preko katerih \
+povezav) z upo\[SHacek]tevanjem obeh omejitev (spodnjih in zgornjih). 
+\
+\>", "Text",
+ CellChangeTimes->{{3.7313023874384756`*^9, 3.7313024026425543`*^9}, 
+   3.7313026596948347`*^9, {3.731507791199423*^9, 3.7315078065030622`*^9}, {
+   3.731518424177363*^9, 3.731518593247518*^9}, {3.731769060009625*^9, 
+   3.731769100113079*^9}},ExpressionUUID->"ac568ba8-1e62-4089-843d-\
+da2743527dde"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(", 
+   RowBox[{"r", " ", "=", " ", 
+    RowBox[{"r2", " ", "+", " ", "r1"}]}], " ", ")"}], " ", "//", 
+  "MatrixForm"}]], "Input",
+ CellChangeTimes->{{3.731302404142625*^9, 3.7313024085804157`*^9}, {
+  3.731302571582378*^9, 3.7313026630544157`*^9}, {3.731508195702433*^9, 
+  3.7315082388140078`*^9}, {3.7315083549957333`*^9, 3.731508375441947*^9}, {
+  3.731508419838791*^9, 3.7315084335987587`*^9}, {3.731518285508238*^9, 
+  3.731518285778186*^9}, {3.731518572883768*^9, 3.731518574181923*^9}, {
+  3.7316868236239233`*^9, 3.731686892150756*^9}, {3.731768630629689*^9, 
+  3.731768653672462*^9}},ExpressionUUID->"abe14340-87cd-4790-98e5-\
+178f77f1a474"],
+
+Cell[BoxData[
+ TagBox[
+  RowBox[{"(", "\[NoBreak]", GridBox[{
+     {"0", "2", "2", "12", "15", "0", "0", "0", "0", "0"},
+     {"0", "0", "0", "0", "0", "8", "0", "0", "0", "0"},
+     {"0", "6", "0", "0", "0", "0", "7", "0", "0", "0"},
+     {"0", "0", "0", "0", "0", "0", "0", "6", "0", "0"},
+     {"0", "0", "5", "0", "0", "0", "0", "0", "8", "0"},
+     {"0", "0", "0", "0", "0", "0", "0", "0", "0", "14"},
+     {"0", "0", "0", "0", "0", "5", "0", "0", "0", "6"},
+     {"0", "0", "0", "0", "0", "0", "6", "0", "0", "6"},
+     {"0", "0", "0", "0", "0", "0", "0", "2", "0", "6"},
+     {"0", "0", "0", "0", "0", "0", "0", "0", "0", "0"}
+    },
+    GridBoxAlignment->{
+     "Columns" -> {{Center}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, 
+      "RowsIndexed" -> {}},
+    GridBoxSpacings->{"Columns" -> {
+        Offset[0.27999999999999997`], {
+         Offset[0.7]}, 
+        Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {
+        Offset[0.2], {
+         Offset[0.4]}, 
+        Offset[0.2]}, "RowsIndexed" -> {}}], "\[NoBreak]", ")"}],
+  Function[BoxForm`e$, 
+   MatrixForm[BoxForm`e$]]]], "Output",
+ CellChangeTimes->{{3.731768631299198*^9, 3.7317686541299686`*^9}, 
+   3.731769105273481*^9},ExpressionUUID->"ec173eed-d1b3-436d-bbda-\
+32e7b99d4d6f"]
+}, Open  ]],
+
+Cell["\<\
+Matrika r predstavlja pretok, ki re\[SHacek]i problem, optimalna vrednost je \
+pa se\[SHacek]tevek optimalne vrednosti problema, ki smo ga re\[SHacek]ili \
+prej, in se\[SHacek]tevek zadnjega stolpca elementov matrike r1. 
+
+Ker je v tem primeru matrika bila zapisana kot kapaciteta povezav S A B C ... \
+T (vrstice matrike) v S A B C ... T (stolpci), zadnji stolpec predstavlja \
+ravno povezave, ki vodijo v T.
+
+Se\[SHacek]tevek 9 + (11 + 4 + 4 + 4) nam prinese rezultat 32. Poglejmo \
+\[SHacek]e \[SHacek]tevilo enot, ki pride po omre\[ZHacek]ju v T (zadnji \
+stolpec): 14 + 6 + 6 + 6 = 32. Re\[SHacek]itev je torej 32.\
+\>", "Text",
+ CellChangeTimes->{{3.731518599192884*^9, 3.731518954050358*^9}, {
+  3.731519493428153*^9, 3.731519495392498*^9}, {3.7315195255119877`*^9, 
+  3.731519619349188*^9}, {3.731769123089038*^9, 3.731769179081677*^9}, {
+  3.7317692118566027`*^9, 
+  3.7317692225071383`*^9}},ExpressionUUID->"eb51dd6b-0932-419a-a026-\
+286e36df4e44"]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{1230, 804},
+WindowMargins->{{0, Automatic}, {Automatic, 0}},
+FrontEndVersion->"11.2 for Mac OS X x86 (32-bit, 64-bit Kernel) (September \
+10, 2017)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 343, 6, 98, "Title",ExpressionUUID->"57f5883e-c118-4feb-b40d-9c1ee0cbb99b"],
+Cell[926, 30, 440, 10, 58, "Text",ExpressionUUID->"9a3beb89-befe-4d44-ab77-710ad075d005"],
+Cell[CellGroupData[{
+Cell[1391, 44, 263, 5, 69, "Chapter",ExpressionUUID->"02e186d1-0d2f-4cb4-a71a-4afc6aeadd96"],
+Cell[1657, 51, 3175, 48, 291, "Text",ExpressionUUID->"ff3708f4-6302-4b44-9a2b-3b461fb1b112"],
+Cell[CellGroupData[{
+Cell[4857, 103, 870, 17, 181, "Input",ExpressionUUID->"57f0515f-bb5a-4e79-829d-52b1c337df62"],
+Cell[5730, 122, 1700, 45, 77, "Output",ExpressionUUID->"fc77dc6f-fb35-4561-8bbd-69a1a10cb639"]
+}, Open  ]],
+Cell[7445, 170, 445, 10, 58, "Text",ExpressionUUID->"e9b4cc44-45d5-4c5f-a295-73765c5429cd"],
+Cell[CellGroupData[{
+Cell[7915, 184, 1682, 33, 216, "Input",ExpressionUUID->"de4b18f7-f933-420e-bf96-66805285e586"],
+Cell[9600, 219, 14610, 320, 62, "Output",ExpressionUUID->"130993eb-2294-40fb-abfd-f4963e5a13f6"]
+}, Open  ]],
+Cell[24225, 542, 475, 9, 35, "Text",ExpressionUUID->"b6373cd9-0338-4490-97e3-be26b2be87b5"],
+Cell[CellGroupData[{
+Cell[24725, 555, 466, 10, 30, "Input",ExpressionUUID->"ff4e047f-e452-4996-9597-d16d5aaa27be"],
+Cell[25194, 567, 1436, 33, 196, "Output",ExpressionUUID->"d7c62dc0-9256-430b-9990-f843d816757a"]
+}, Open  ]],
+Cell[26645, 603, 854, 14, 104, "Text",ExpressionUUID->"ac568ba8-1e62-4089-843d-da2743527dde"],
+Cell[CellGroupData[{
+Cell[27524, 621, 687, 13, 30, "Input",ExpressionUUID->"abe14340-87cd-4790-98e5-178f77f1a474"],
+Cell[28214, 636, 1275, 28, 196, "Output",ExpressionUUID->"ec173eed-d1b3-436d-bbda-32e7b99d4d6f"]
+}, Open  ]],
+Cell[29504, 667, 968, 18, 150, "Text",ExpressionUUID->"eb51dd6b-0932-419a-a026-286e36df4e44"]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+

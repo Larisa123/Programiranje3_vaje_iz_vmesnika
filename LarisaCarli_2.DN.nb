@@ -1,0 +1,341 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 11.1' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     12184,        333]
+NotebookOptionsPosition[     11210,        307]
+NotebookOutlinePosition[     11567,        323]
+CellTagsIndexPosition[     11524,        320]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[TextData[StyleBox["2. Doma\[CHacek]a naloga",
+ FontTracking->"Plain",
+ FontColor->RGBColor[1, 0, 0]]], "Title",
+ CellChangeTimes->{{3.7304499313010445`*^9, 3.7304499398687572`*^9}, {
+  3.730730306645092*^9, 
+  3.730730306792767*^9}},ExpressionUUID->"57f5883e-c118-4feb-b40d-\
+9c1ee0cbb99b"],
+
+Cell["\<\
+Restavracija je odprta sedem dni v tednu. Izku\[SHacek]nje ka\[ZHacek]ejo, da \
+je na posami\[CHacek]ne dneve potrebno slede\[CHacek]e \[SHacek]tevilo \
+delavcev: 14 13 15 16 19 18 11 (pon. - ned.).
+Vsak delavec dela pet zaporednih dni in ima naslednja dva dneva prosta. 
+Najmanj koliko delavcev mora zaposliti restavracija, da pokrije svoje potrebe?
+\
+\>", "Text",
+ CellChangeTimes->{{3.7304499892900195`*^9, 3.7304501198258753`*^9}, {
+  3.7307216686931963`*^9, 3.730721668856728*^9}, {3.7307303030238333`*^9, 
+  3.730730367164645*^9}, {3.731168075146645*^9, 
+  3.731168080843401*^9}},ExpressionUUID->"9a3beb89-befe-4d44-ab77-\
+710ad075d005"],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["Re\[SHacek]itev:",
+ FontColor->RGBColor[1, 0, 0]]], "Chapter",
+ CellChangeTimes->{{3.730721527855692*^9, 3.730721538249179*^9}, {
+  3.730721601859852*^9, 
+  3.7307216070678663`*^9}},ExpressionUUID->"02e186d1-0d2f-4cb4-a71a-\
+4afc6aeadd96"],
+
+Cell[TextData[{
+ "Definirajmo spremenljivke ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SubscriptBox["x", "1"], ",", "...", ",", " ", 
+    SubscriptBox["x", "7"], ",", " "}], TraditionalForm]],ExpressionUUID->
+  "224cb612-fab8-470c-83b9-4ee6145e4dd5"],
+ "ki predstavljajo \[SHacek]tevilo delavcev, ki jih zaposlimo na ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SubscriptBox["x", "i"], "-", "ti", " "}], TraditionalForm]],
+  ExpressionUUID->"a158d583-1969-4522-9ca2-6130a5fe6f88"],
+ "dan. Pri tako zasnovanem problemu \[ZHacek]elimo minizirati torej vsoto ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SubscriptBox["x", "1"], "+", 
+    SubscriptBox["x", "2"], "+", 
+    SubscriptBox["x", "3"], "+", 
+    SubscriptBox["x", "4"], "+", 
+    SubscriptBox["x", "5"], "+", 
+    SubscriptBox["x", "6"]}], TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "c7905bb7-816b-4de7-a8e4-146522d68f1d"],
+ "+",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SubscriptBox["x", "7"], "."}], TraditionalForm]],ExpressionUUID->
+  "e192fca7-72b6-48e9-b635-5e64c9e1fec4"],
+ "\n\nPogoje, da vsak delavec dela 5 delovnih dni lahko zapi\[SHacek]emo na \
+naslednji na\[CHacek]in. \[CapitalCHacek]e delavec za\[CHacek]ne delati na  ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SubscriptBox["x", "i"], "-", "ti", " "}], TraditionalForm]],
+  ExpressionUUID->"06418e3a-ca34-4e6e-ac85-5ea6af958a5c"],
+ "dan, bo delal tudi na ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SubscriptBox["x", "i"], ",", " ", 
+    SubscriptBox["x", 
+     RowBox[{"i", "+", "1"}]], ",", " ", 
+    SubscriptBox["x", 
+     RowBox[{"i", "+", "2"}]], ",", " ", 
+    RowBox[{
+     RowBox[{
+      SubscriptBox["x", 
+       RowBox[{"i", "+", "3"}]], " ", "in", " ", "\[SHacek]e", " ", 
+      SubscriptBox["x", 
+       RowBox[{"i", "+", "4"}]]}], "-", 
+     RowBox[{"ti", " ", 
+      RowBox[{"dan", ".", " "}]}]}]}], TraditionalForm]],ExpressionUUID->
+  "94ae2035-1dd2-4b0d-bbf8-bc91e45b3b04"],
+ "Dnevi sicer ne grejo do neskon\[CHacek]nosti, ampak od i = 1 do i = 7; ko \
+pridemo do 7. dneva, s \[SHacek]tetjem za\[CHacek]nemo ponovno, torej spet od \
+1 naprej. 1. dan predstavlja torej ponedeljek, 7. dan pa nedeljo. \n\nPogoje \
+za \[SHacek]tevilo potrebnih delavcev za dolo\[CHacek]en dan lahko zapi\
+\[SHacek]emo tako: na ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["x", "i"], TraditionalForm]],ExpressionUUID->
+  "1f6413e6-52c5-4eae-b3bf-d94f10570cd7"],
+ "-ti dan delajo delavci, ki so bili zaposleni med dnevi i-4 in i, njihovo \
+\[SHacek]tevilo pa mora na tisti dan biti enako vsaj \[SHacek]tevilu \
+potrebovanih delavcev na tisti dan. \n\nPogoj za na primer 5. dan izgleda \
+torej tako: na ta dan delajo delavci zaposleni na ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SubscriptBox["x", "1"], ",", " ", 
+    SubscriptBox["x", "2"], ",", " "}], TraditionalForm]],ExpressionUUID->
+  "4dc48f1f-51f9-4d7e-96dc-f6f724267dc1"],
+ Cell[BoxData[
+  RowBox[{
+   SubscriptBox["x", "3"], ","}]],ExpressionUUID->
+  "527efe10-036a-44bb-8c3a-431b226d626e"],
+ Cell[BoxData[
+  RowBox[{
+   SubscriptBox["x", "4"], " "}]],ExpressionUUID->
+  "daef2a2a-35eb-4285-8ba5-eca2a8db0ad0"],
+ "in ",
+ Cell[BoxData[
+  SubscriptBox["x", "5"]],ExpressionUUID->
+  "10d8df19-f7c0-4b9d-a150-c8dc3db56dea"],
+ "-ti dan, njihova vsota pa more biti enaka vsaj 19.\n\nSpremenljivke ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["x", "i"], TraditionalForm]],ExpressionUUID->
+  "3e4cd1d0-da33-40e4-b4ee-74f161a50f04"],
+ " morajo prav tako biti nenegativne, ker ne moremo zaposliti negativnega \
+\[SHacek]tevila delavcev.\n\nDodaten pogoj, ki ga moramo zahtevati je pa \
+\[SHacek]e seveda celo\[SHacek]tevilskost re\[SHacek]itve. \n\nProgram lahko \
+potem oblikujemo na naslednji na\[CHacek]in."
+}], "Text",
+ CellChangeTimes->{{3.730450198739558*^9, 3.7304502698628416`*^9}, {
+   3.7307216797129927`*^9, 3.730721772105876*^9}, {3.730721806507986*^9, 
+   3.7307220831006403`*^9}, {3.7307224589995413`*^9, 3.730722502103677*^9}, {
+   3.730730402741795*^9, 3.730730519764513*^9}, 3.730730566081954*^9, {
+   3.730730613353323*^9, 3.730731526674138*^9}, {3.731167805060439*^9, 
+   3.7311678875857553`*^9}, {3.7311680879178267`*^9, 3.731168121076303*^9}, {
+   3.731168176230513*^9, 3.731168213682897*^9}, {3.731168246600696*^9, 
+   3.731168302736619*^9}, {3.7311683939160748`*^9, 3.731168518617594*^9}, {
+   3.731168549872128*^9, 3.7311689254355097`*^9}, {3.731168987869185*^9, 
+   3.7311690715005817`*^9}, {3.731170311489471*^9, 
+   3.731170347453741*^9}},ExpressionUUID->"ff3708f4-6302-4b44-9a2b-\
+3b461fb1b112"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Minimize", "[", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{
+      SubscriptBox["x", "1"], "+", 
+      SubscriptBox["x", "2"], "+", 
+      SubscriptBox["x", "3"], "+", 
+      SubscriptBox["x", "4"], "+", 
+      SubscriptBox["x", "5"], "+", 
+      SubscriptBox["x", "6"], "+", 
+      SubscriptBox["x", "7"]}], ",", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{
+       SubscriptBox["x", "1"], "+", 
+       SubscriptBox["x", "4"], "+", 
+       SubscriptBox["x", "5"], "+", 
+       SubscriptBox["x", "6"], "+", 
+       SubscriptBox["x", "7"]}], "\[GreaterEqual]", "14"}], ",", 
+     "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{
+       SubscriptBox["x", "1"], "+", 
+       SubscriptBox["x", "2"], "+", 
+       SubscriptBox["x", "5"], "+", 
+       SubscriptBox["x", "6"], "+", 
+       SubscriptBox["x", "7"]}], "\[GreaterEqual]", "13"}], ",", 
+     "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{
+       SubscriptBox["x", "1"], "+", 
+       SubscriptBox["x", "2"], "+", 
+       SubscriptBox["x", "3"], "+", 
+       SubscriptBox["x", "6"], "+", 
+       SubscriptBox["x", "7"]}], "\[GreaterEqual]", "15"}], ",", 
+     "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{
+       SubscriptBox["x", "1"], "+", 
+       SubscriptBox["x", "2"], "+", 
+       SubscriptBox["x", "3"], "+", 
+       SubscriptBox["x", "4"], "+", 
+       SubscriptBox["x", "7"]}], "\[GreaterEqual]", "16"}], ",", 
+     "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{
+       SubscriptBox["x", "1"], "+", 
+       SubscriptBox["x", "2"], "+", 
+       SubscriptBox["x", "3"], "+", 
+       SubscriptBox["x", "4"], "+", 
+       SubscriptBox["x", "5"]}], "\[GreaterEqual]", "19"}], ",", 
+     "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{
+       SubscriptBox["x", "2"], "+", 
+       SubscriptBox["x", "3"], "+", 
+       SubscriptBox["x", "4"], "+", 
+       SubscriptBox["x", "5"], "+", 
+       SubscriptBox["x", "6"]}], "\[GreaterEqual]", "18"}], ",", 
+     "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{
+       SubscriptBox["x", "3"], "+", 
+       SubscriptBox["x", "4"], "+", 
+       SubscriptBox["x", "5"], "+", 
+       SubscriptBox["x", "6"], "+", 
+       SubscriptBox["x", "7"]}], "\[GreaterEqual]", "11"}], ",", 
+     "\[IndentingNewLine]", 
+     RowBox[{
+      SubscriptBox["x", "1"], "\[GreaterEqual]", "0"}], ",", 
+     RowBox[{
+      SubscriptBox["x", "2"], "\[GreaterEqual]", "0"}], ",", 
+     RowBox[{
+      SubscriptBox["x", "3"], "\[GreaterEqual]", "0"}], ",", 
+     RowBox[{
+      SubscriptBox["x", "4"], "\[GreaterEqual]", "0"}], ",", 
+     RowBox[{
+      SubscriptBox["x", "5"], "\[GreaterEqual]", "0"}], ",", 
+     RowBox[{
+      SubscriptBox["x", "6"], "\[GreaterEqual]", "0"}], ",", 
+     RowBox[{
+      SubscriptBox["x", "7"], "\[GreaterEqual]", "0"}]}], "}"}], ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"{", 
+    RowBox[{
+     SubscriptBox["x", "1"], ",", 
+     SubscriptBox["x", "2"], ",", 
+     SubscriptBox["x", "3"], ",", 
+     SubscriptBox["x", "4"], ",", 
+     SubscriptBox["x", "5"], ",", 
+     SubscriptBox["x", "6"], ",", 
+     SubscriptBox["x", "7"]}], "}"}], ",", " ", "\[IndentingNewLine]", 
+   "Integers"}], "]"}]], "Input",
+ CellChangeTimes->{{3.7311689427184668`*^9, 3.731168977127397*^9}, {
+  3.73116908399833*^9, 3.73116940837122*^9}, {3.731169441454042*^9, 
+  3.731169493346895*^9}, {3.731169539412712*^9, 3.731169638811705*^9}, {
+  3.731169708511614*^9, 3.731169724326922*^9}, {3.731169793653357*^9, 
+  3.7311697988743*^9}, {3.731169851237969*^9, 3.73116987500556*^9}, {
+  3.731169968840982*^9, 
+  3.731170246238345*^9}},ExpressionUUID->"14a4aa8d-b3c1-49fd-adce-\
+2e22e44ea940"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"22", ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{
+      SubscriptBox["x", "1"], "\[Rule]", "4"}], ",", 
+     RowBox[{
+      SubscriptBox["x", "2"], "\[Rule]", "7"}], ",", 
+     RowBox[{
+      SubscriptBox["x", "3"], "\[Rule]", "1"}], ",", 
+     RowBox[{
+      SubscriptBox["x", "4"], "\[Rule]", "4"}], ",", 
+     RowBox[{
+      SubscriptBox["x", "5"], "\[Rule]", "3"}], ",", 
+     RowBox[{
+      SubscriptBox["x", "6"], "\[Rule]", "3"}], ",", 
+     RowBox[{
+      SubscriptBox["x", "7"], "\[Rule]", "0"}]}], "}"}]}], "}"}]], "Output",
+ CellChangeTimes->{
+  3.731170248851244*^9},ExpressionUUID->"09da4239-4114-42f9-8502-\
+c4ce2b89673b"]
+}, Open  ]],
+
+Cell[TextData[{
+ StyleBox["\nOpomba: ",
+  FontWeight->"Bold"],
+ "Pri predmetu Optimizacija smo imeli podoben problem, ki je sicer bil malo \
+druga\[CHacek]e formuliran,  opazila pa sem, da se tega da re\[SHacek]iti z \
+isto idejo. Upam, da je re\[SHacek]itev v redu."
+}], "Text",
+ CellChangeTimes->{{3.7311679006945887`*^9, 3.731168037935371*^9}, {
+  3.7311689310560923`*^9, 
+  3.731168933352982*^9}},ExpressionUUID->"a1928b56-e306-4978-bb25-\
+513a60343753"]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{791, 855},
+WindowMargins->{{0, Automatic}, {Automatic, 0}},
+FrontEndVersion->"11.2 for Mac OS X x86 (32-bit, 64-bit Kernel) (September \
+10, 2017)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 295, 6, 98, "Title",ExpressionUUID->"57f5883e-c118-4feb-b40d-9c1ee0cbb99b"],
+Cell[878, 30, 653, 12, 127, "Text",ExpressionUUID->"9a3beb89-befe-4d44-ab77-710ad075d005"],
+Cell[CellGroupData[{
+Cell[1556, 46, 263, 5, 69, "Chapter",ExpressionUUID->"02e186d1-0d2f-4cb4-a71a-4afc6aeadd96"],
+Cell[1822, 53, 4528, 109, 472, "Text",ExpressionUUID->"ff3708f4-6302-4b44-9a2b-3b461fb1b112"],
+Cell[CellGroupData[{
+Cell[6375, 166, 3650, 101, 241, "Input",ExpressionUUID->"14a4aa8d-b3c1-49fd-adce-2e22e44ea940"],
+Cell[10028, 269, 681, 21, 34, "Output",ExpressionUUID->"09da4239-4114-42f9-8502-c4ce2b89673b"]
+}, Open  ]],
+Cell[10724, 293, 458, 10, 81, "Text",ExpressionUUID->"a1928b56-e306-4978-bb25-513a60343753"]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
